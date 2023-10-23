@@ -2,8 +2,6 @@ package stream
 
 import (
 	"errors"
-
-	"dario.cat/mergo"
 )
 
 // Config is the configuration for encrypted stream.
@@ -14,7 +12,7 @@ type Config struct {
 	// MaxChunkSize is the max number of bytes that will be encrypted and write to
 	// underlying stream in a single chunk. If zero, default value (65535) will be
 	// used.
-	MaxChunkSize int
+	MaxChunkSize int `default:"30"`
 
 	// Initiator indicates the direction of the stream (initiator or responder).
 	// Two sides of the stream should set this to different value (i.e. one stream
@@ -63,17 +61,4 @@ func (config *Config) Verify() error {
 	}
 
 	return nil
-}
-
-// MergeConfig merges a given config with the default config recursively. Any
-// non zero value fields will override the default config.
-func MergeConfig(base, conf *Config) (*Config, error) {
-	merged := *base
-	if conf != nil {
-		err := mergo.Merge(&merged, conf, mergo.WithOverride)
-		if err != nil {
-			return nil, err
-		}
-	}
-	return &merged, nil
 }

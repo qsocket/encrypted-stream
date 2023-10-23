@@ -34,12 +34,11 @@ type EncryptedStream struct {
 // NewEncryptedStream creates an EncryptedStream with a given ReadWriter and
 // config.
 func NewEncryptedStream(stream io.ReadWriter, config *Config) (*EncryptedStream, error) {
-	config, err := MergeConfig(DefaultConfig(), config)
-	if err != nil {
-		return nil, err
+	if config == nil {
+		config = DefaultConfig()
 	}
 
-	err = config.Verify()
+	err := config.Verify()
 	if err != nil {
 		return nil, err
 	}
