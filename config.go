@@ -3,7 +3,7 @@ package stream
 import (
 	"errors"
 
-	"github.com/imdario/mergo"
+	"dario.cat/mergo"
 )
 
 // Config is the configuration for encrypted stream.
